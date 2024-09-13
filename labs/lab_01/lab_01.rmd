@@ -1,0 +1,152 @@
+---
+title: "lab_01"
+author: "Derek Willis"
+adapted by: "Daniel Trielli"
+date: "2024-05-23"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# Turn off scientific notation
+options(scipen=999)
+```
+
+## About this lab
+
+To complete this lab, you need to: \* run existing code as directed (look for **Task**). \* modify existing code as directed (look for **Task**). \* write code in empty codeblocks provided to answer questions included (look for **Q**). \* write out the answer in the form of a complete sentence in the space given (look for **A**). When you are finished, commit changes and push to your personal GitHub repo, then submit the URL to this document on ELMS.
+
+Remember to add any new verbs or concepts to your class reference notebook!
+
+## Load libraries and establish settings
+
+**Task** Run the codeblock below to load the Tidyverse. To run the codeblock, hit the little green play button in the upper right corner of the gray area (the codeblock) below.
+
+```{r}
+# Load the tidyverse. If you have not installed the tidyverse already, remove the # from the next line and run it first.  
+# install.packages('tidyverse')
+library(tidyverse)
+```
+
+## Load Data
+
+We're going to load the UMD courses data.
+
+**Task** Run the codeblock below to load the data, which is contained in an RDS file.
+
+```{r}
+umd_courses <- read_rds("lab_01.rds")
+```
+
+## Answer questions
+
+### **Q1** Which department has the highest mean (average) number of seats for its classes? You need to show the department with the highest average first. Which one is the most surprising/interesting to you?
+
+```{r}
+umd_courses |>
+  group_by(department) |>
+  summarise(
+    mean_seats = mean(seats)
+  ) |>
+  arrange(desc(mean_seats))
+```
+
+**A1: Engineering, Cooperative Education has the highest mean with over 300 seats on average per class. What is University Courses? Why are so many people taking Air Science?? I'm intrigued by Behavior, Ecology, Evolution and Systematics having a mean seats of 2.5. What?**
+
+------------------------------------------------------------------------
+
+### **Q2** Find out the greatest number of times any individual class has been offered in our dataset. You must show the greatest number of classes first.
+
+```{r}
+umd_courses |>
+  group_by(id) |>
+    summarize(
+    amount_classes = n(),
+    ) |>
+arrange(desc(amount_classes))
+    
+
+```
+
+**A2: The greatest time an individual class has been offered is 22 times, tied between many different classes. It seems like the lowest is 12? I would have thought it would be 1, so I'm suspicious of my answer, but I don't know how else to do it.**
+
+------------------------------------------------------------------------
+
+### **Q3** Count the number of courses for each instructor and department. Which instructor has taught the most?
+
+```{r}
+umd_courses |>
+  group_by(id) |>
+  group_by(department) |>
+  group_by(instructors) |>
+  summarize(
+    amount_classes = n(),
+    
+    
+  ) |>
+arrange(desc(amount_classes))
+
+```
+
+**A3: I've started by getting the amount of times a class is offered with a high of 22 times. Then, I got to the amount of classes per department, with business and management the highest with 1900 classes. And I think I finally got it, instructor Elsa Barkley Brown teaches the most classes at 73 (which doesn't seem possible) and "instructor: tba" is technically the highest with 764 classes, but I didn't count that.**
+
+------------------------------------------------------------------------
+
+### **Q4** Given the results for Q3, what would have made it easier to find the answer? You don't have to know *how* to accomplish this; I want you to describe in words what would make the answer easier to see.
+
+```{r}
+
+```
+
+**A4: Assuming that I did it correctly, the first thing that would make it easier is if I could have filtered out "instructor: tba" as an option. Then, and I don't know if I made it needlessly complicated here, but I should have been able to just do**
+
+group_by(instructors) \|\>
+
+summarize( amount_classes = n(),
+
+) \|\> arrange(desc(amount_classes))
+
+**but I don't think that would have worked as well for me. And of course it would be easiest if I could just search for "name with the most classes under it."**
+
+### **Q5** Take one of the questions you listed in the final question of the pre_lab and try to answer it here in code. If you don't know how to fully answer it, write what code you can and describe in words what else you would need to do. If you got an answer, is it interesting?
+
+```{r}
+umd_courses |>
+  group_by(department) |>
+  summarise(
+    count_classes = n(),
+    total_seats = sum(seats),
+    mean_seats = mean(seats),
+    median_seats = median(seats),
+    minimum_seats = min(seats),
+    maximum_seats = max(seats),
+    mode_seats = mode(seats)
+  ) |>
+  arrange(desc(mode_seats))
+```
+
+**A5: I chose my question "**I'm intrigued about a few of the massive class sizes, I would ask what programs have those.**"**
+
+**This is pretty close to being answered by the first question of this lab, but that's the mean and not the actual amount of seats. As I said in question 1, Engineering, Cooperative Education has the highest mean with over 300 seats on average per class. But that doesn't mean it has the class with the highest amount of seats, etc., etc. So my best bet would be using the mean, median, and mode together.**
+
+**When I do this:**
+
+umd_courses \|\> group_by(department) \|\> summarise( total_seats = sum(seats) ) \|\> arrange(desc(total_seats))
+
+**I see that business and management has the highest TOTAL seats with 162,813.**
+
+**To get my mean, median, and mode answers I alternate which ones I arrange by, using this:**
+
+arrange(desc(mean_seats))
+
+**Highest mean: Engineering with \~306**
+
+**Highest median: Engineering with 200**
+
+**Highest mode: I don't know. I couldn't find a way to use R to calculate mode, because the command:**
+
+mode_seats = mode(seats) **OR** mode(x)
+
+**just tells me the type of object, so for numbers it just gives me a bunch of rows of "numeric."**
+
+**But for now I think it's safe to say engineering has the biggest classes. If I were writing a story about it, I would make sure to note that my data is only from the mean and median. I think my answer is pretty interesting, and if I were writing about it I would be interested in things like the acceptance rate for the engineering program, the funding, and other details.**
