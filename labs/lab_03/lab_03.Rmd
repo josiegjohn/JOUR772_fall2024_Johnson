@@ -53,11 +53,13 @@ A1:
 ```{r}
 pg_schools <- payments |>
   filter(vendor_name == 'PRINCE GEORGES PUBLIC SCHOOLS' | vendor_name == 'PRINCE GEORGES COUNTY PUBLIC SCHOOLS' | vendor_name == 'PG COUNTY PUBLIC SCHOOL' | vendor_name == 'PRINCE GEORGES COUNTY PUBLIC SCHOOL' | vendor_name == 'PRINCE GEORGES COUNTY SCHOOL')
+
+school_name_finder <- md_payments |> filter(str_detect(vendor_name, "SCHOOL")) |> group_by(vendor_name) |> summarize
 ```
 
 Q2: Using that `pg_schools` dataframe, write code to calculate the total amount of payments to the Prince George's County School system for each fiscal year. Which fiscal year had the largest total amount? What do you notice about the years listed, and what questions do you have about that data?
 
-A2: **2021 had the highest total amount with 1470133533**
+A2: **2021 had the highest total amount with 1470133533 (just kidding this is wrong.... the highest amount is 2020)**
 
 ```{r}
 pg_schools |>
@@ -65,7 +67,7 @@ pg_schools |>
   summarize(
     total_amount = sum(amount)
   ) |>
-  arrange(desc(total_amount))
+  arrange(desc(fiscal_year))
 
 ```
 
@@ -76,6 +78,8 @@ Look carefully at that list - what cleaning will it require to ensure that you h
 Provide at least three examples of vendor names that are similar and should be combined into one. Describe how you might clean that data so that any nearly identical vendors would look identical - what would you change and how?
 
 A3. A & I INC, A&I INC, and A&I INC. are all presumably the same. I would probably just str_detect for inc and go from there. But in the future it would be ideal for whatever they're using to collect the data to have a drop-down menu, or to autocorrect to an official name for each company.
+
+real answer:
 
 ```{r}
 payments |>
@@ -100,6 +104,7 @@ A4: For some reason, I only have 3 years showing no matter what I do. So based o
 grants_loans |>
   filter(str_detect(description, "STEM CELL"))
   # did not standardize because my string detect works fine
+# *narrator voice* "it did not work fine" 
   
 grants_loans |>
     group_by(fiscal_year) |>
