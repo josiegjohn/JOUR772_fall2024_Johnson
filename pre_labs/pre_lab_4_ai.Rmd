@@ -22,7 +22,7 @@ Then we can load that library and, using your API key, setup your credentials:
 
 ```{r}
 library(axolotr)
-create_credentials(GROQ_API_KEY = "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")
+create_credentials(GROQ_API_KEY = "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")
 ```
 
 See that "Please restart your R session for changes to take effect."? Go ahead and do that; you'll need to rerun the `library()` function for axolotr, and let's load tidyverse while we're at it.
@@ -66,10 +66,12 @@ What if we could extract portions of the text that could be turned into data int
 ```{r}
 text = "Gabriela Nunes Herman and Tyson Charles Evans were married Saturday at the home of their friends Marcy Gringlas and Joel Greenberg in Chilmark, Mass. Rachel Been, a friend of the couple who received a one-day solemnization certificate from Massachusetts, officiated. The bride, 33, will continue to use her name professionally. She is a Brooklyn-based freelance photographer for magazines and newspapers. She graduated from Wesleyan University in Middletown, Conn. She is a daughter of Dr. Talia N. Herman of Brookline, Mass., and Jeffrey N. Herman of Cambridge, Mass. The bride’s father is a lawyer and the executive vice president of DecisionQuest, a national trial consulting firm in Boston. Her mother is a senior primary care internist at Harvard Vanguard Medical Associates, a practice in Boston. The groom, 31, is a deputy editor of interactive news at The New York Times and an adjunct professor at the Columbia University Graduate School of Journalism. He graduated from the University of California, Los Angeles. He is the son of Carmen K. Evans of Climax Springs, Mo., and Frank J. Evans of St. Joseph, Mo. The groom’s father retired as the president of UPCO, a national retailer of pet supplies in St. Joseph."
 
+# ask function to ask sir groq a question, prompt explains something?
 evans_response <- axolotr::ask(
   prompt = paste("Given the following text, extract information into a CSV file with the following structure, including headers, with no yapping: celebrant1,celebrant2,location_city, location_state,officiant,celebrant1_age,celebrant2_age,celebrant1_parent1,celebrant1_parent2,celebrant2_parent1,celebrant2_parent2", text),
   model = "llama-3.1-8b-instant"
 )
+# paste is combining two things together, combine text into a prompt and something you want to feed to the prompt
 
 evans_response
 ```
