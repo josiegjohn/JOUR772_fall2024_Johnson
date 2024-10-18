@@ -1,0 +1,155 @@
+---
+title: "Reverse Engineering Project Group 4"
+author: "Josie Cat and Xavier "
+date: "10/17"
+output:
+  html_document:
+    theme: cerulean
+    highlight: pygments
+    toc: true
+    toc_float:
+      collapsed: true
+      smooth_scroll: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+In this notebook, we are reverse engineering the story, **Inside The Political Donation History Of Wealthy Sports Owners**
+
+## Load libraries
+
+Loading required libraries for this analysis.
+
+```{r echo=FALSE, message=FALSE}
+options(scipen=999)
+library(tidyverse)
+library(janitor)
+library(lubridate)
+library(readr)
+install.packages("dplyr")
+library(dplyr)
+
+```
+
+## Load and Cleaning Data
+
+In this section, describe the source of the data, write a basic data dictionary for data you are working with, and discuss any caveats or issues you discovered working with this data.
+
+```{r}
+# Load required data
+sports <- read_csv("data/sports-political-donations.csv")
+
+# Path to data should be loaded from folder "data" i.e. read_csv("data/name_of_data.csv")
+
+sports <- sports |>
+  clean_names()
+
+sports <- sports |>
+  mutate(
+    owner = str_to_upper(owner), 
+    league = str_to_upper(league), 
+    team = str_to_upper(team)
+  )
+
+sports <- sports |>
+  mutate(
+    amount = gsub("\\$", "", amount),
+    amount = gsub(",", "", amount),
+    amount = as.double(amount),
+    election_year = as.character(election_year)
+  )
+# Clean required data and prepare for analysis if needed. 
+#as.double turns into number, which is the opposite of as.character 
+
+```
+
+"
+
+## Sentences to Engineer
+
+In this notebook, we are reverse engineering five sentences from the story.
+
+### Sentence 1
+
+-   **Sentence text**: **“A deep search in the Federal Election Commission database of campaign finances for principal owners, controlling owners, co-owners and commissioners from the NBA, NFL, NHL, WNBA, MLB and NASCAR reveals that this deep-pocketed group has sent \$34.2 million (72.9 percent) to Republican campaigns or super PACs purely supporting Republican causes, compared to \$10.1 million (21.5 percent) to Democrats over the past three elections.”**
+-   **Analysis summary**: By grouping by party and then getting the sum of amounts given, we were then able to create a new block with the amounts and what party was giving them From there we got the percents of the total and were able to see that the Republican party donated the most with 72.89 percent, which was (fairly) rounded up to 72.9 percent in the article. We also see the correct 21.5 percent from democrats.
+-   Note: I am unsure why my code does not show below, but the separate block should load and be view-able.
+
+```{r}
+# Put code to reverse engineer sentence here
+#find which owners, co-owners, and comissioners from NBA, NFL, NHL, WNBA, MLB, NASCAR sent a total of $34.2 million to Republican campaigns 2024 in 2020 
+
+sports_amounts <- sports |>
+  group_by(party) |>
+  summarise(
+    party_amounts=sum(amount)
+  ) |>
+  mutate(
+    all_donations=sum(party_amounts)
+  ) |>
+  mutate(
+    pct_total=(party_amounts / all_donations *100)
+  ) |>
+  arrange(desc(pct_total))
+
+# Display results of code below this codeblock
+
+view(sports_amounts)
+
+#cat knew gsub and explained. she also explained the backslashes and that info is from chatgpt.
+
+```
+
+### Sentence 2
+
+-   **Sentence text**: [Paste in sentence to engineer here]
+-   **Analysis summary**: [Write up two to three sentences describing the results of your analysis. Were you able to confirm the finding? If not, why not?]
+
+```{r}
+# Put code to reverse engineer sentence here
+
+# Display results of code below this codeblock
+
+```
+
+### Sentence 3
+
+-   **Sentence text**: [Paste in sentence to engineer here]
+-   **Analysis summary**: [Write up two to three sentences describing the results of your analysis. Were you able to confirm the finding? If not, why not?]
+
+```{r}
+# Put code to reverse engineer sentence here
+
+# Display results of code below this codeblock
+
+```
+
+### Sentence 4
+
+-   **Sentence text**: [Paste in sentence to engineer here]
+-   **Analysis summary**: [Write up two to three sentences describing the results of your analysis. Were you able to confirm the finding? If not, why not?]
+
+```{r}
+# Put code to reverse engineer sentence here
+
+# Display results of code below this codeblock
+
+```
+
+### Sentence 5
+
+-   **Sentence text**: [Paste in sentence to engineer here]
+-   **Analysis summary**: [Write up two to three sentences describing the results of your analysis. Were you able to confirm the finding? If not, why not?]
+
+```{r}
+# Put code to reverse engineer sentence here
+
+# Display results of code below this codeblock
+
+```
+
+-30-
