@@ -97,11 +97,10 @@ A3.
 
 ```{r}
 baltimore_zipcode |>
-  mutate(amount_calls = )
-  
-baltimore_zipcode |>
   filter(pct_under_18 >= 75) |>
-  summarize(zip_code, population, pct_under_18, amount_calls)
+  group_by(zip_code, population, pct_under_18) |>
+  summarize(total=n()) |>
+  mutate(ihatethis = total/population * 1000)
   
   
 
@@ -110,7 +109,15 @@ baltimore_zipcode |>
 
 ### Q4. Choose your own adventure: I want you to come up with a question you could ask of the Baltimore City data that combines both the calls and the demographic information. You must use both demographics and the overdose call data in your work.
 
-A4:
+Q4: In Neighborhoods with a high population, so 15 or more percent, of people over 65: which has the most calls?
+
+A4: Woodmere has the most calls with a total of 66. And their percentage of the population over 65 years old is 16.8 percent.
 
 ```{r}
+baltimore_zipcode |>
+  filter(pct_pop_65 > 15) |>
+  arrange(desc(pct_pop_65)) |>
+  group_by(neighborhood, pct_pop_65) |>
+  summarize(total=n()) |>
+  arrange(desc(total))
 ```
