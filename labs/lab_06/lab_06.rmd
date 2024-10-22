@@ -60,7 +60,7 @@ baltimore_zipcode <- baltimore |>
 
 ### Q1. Let's start with our data from Allegany, Cecil and Carroll counties. Write code to generate a dataframe that shows the total number of calls for each county. What's the order of counties from most calls to least?
 
-A1.
+A1. carroll, cecil, allegany
 
 ```{r}
 overdose_combined |>
@@ -75,7 +75,7 @@ overdose_combined |>
 
 Then calculate the most calls per county and location. Which location had the most calls - where and what is that location?
 
-A2.
+A2. Grove neck Rd has the most with 15
 
 ```{r}
 overdose_combined |>
@@ -93,7 +93,7 @@ Add a column to your code that calculates the number of calls per 1,000 people f
 
 Which zip code has the highest rate of calls per 1,000 people? Find the neighborhoods in that zip code that are listed in the data - you can use group_by or distinct to do this. What are some of those neighborhoods?
 
-A3.
+A3.21201 with 18.9
 
 ```{r}
 baltimore_zipcode |>
