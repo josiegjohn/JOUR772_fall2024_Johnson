@@ -65,6 +65,7 @@ maryland_top_counties <- md_voters |>
   head(10)
 
 maryland_top_counties
+
 ```
 
 Now let's create a bar chart using ggplot.
@@ -78,6 +79,7 @@ With ggplot, the first thing we'll always do is draw a blank canvas that will co
 ```{r}
 maryland_top_counties |>
   ggplot()
+
 ```
 
 Next we need to tell ggplot what kind of chart to make.

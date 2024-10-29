@@ -95,7 +95,7 @@ age21 |>
 
 ```
 
-**Answer here:**
+**Answer here: Worcester County and Talbot County**
 
 ------------------------------------------------------------------------
 
@@ -121,12 +121,22 @@ montotal <- overdose |>
 montotal_pop <- get_acs(geography = "zcta", variables = "B09021_001", state = "MD", year = 2019)
 
 
+#correct answers
 
+#montgomery_911_calls <- read_csv("data/montgomery_2022_overdoses.csv") |> mutate(zip = as.character(zip))
+
+#montco_totals <- montgomery_911_calls |> group_by(zip) |> summarize(calls = n()) |> arrange(desc(calls))
+
+#md_zcta_population <- get_acs(geography="zcta", variables = "B09021_001", state='MD', year=2019)
+
+#montco_zip_with_population <- montco_totals |> inner_join(md_zcta_population, by=c('zip' = 'GEOID')) |> rename(population = estimate)
+
+#montco_zip_with_population <- montco_zip_with_population |> mutate(rate_per_1k = (calls/population)*1000) |> arrange(desc(rate_per_1k))
   
 
 ```
 
-**Answer here:**
+**Answer here:** 20877 with the highest and 20707 for lowest
 
 ------------------------------------------------------------------------
 
@@ -140,7 +150,14 @@ montotal_pop <- get_acs(geography = "zcta", variables = "B09021_001", state = "M
 
 ```{r}
 montotal_pop <- montotal_pop |>
-  mutate(population_min - population_max = population_moe)
+  mutate(population_min = population-moe, population_max = population+moe) |>
+  mutate(rate_per_1k_min = (calls/population_min)*1000, rate_per_1k_max = (calls/population_max)*1000)
+#I tried what we did in class and got an error, I don't know at this point
+
+#answers
+#montco_zip_with_population <- montco_zip_with_population |> 
+  #mutate(population_min = population-moe, population_max = population+moe) |> 
+  #mutate(rate_per_1k_min = (calls/population_min)*1000, rate_per_1k_max = (calls/population_max)*1000)
 ```
 
-**Answer here:**
+**Answer here: I didn't have much confidence in the first place, but getting an error doesn't tell me anything, haha**
