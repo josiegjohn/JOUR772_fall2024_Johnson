@@ -77,12 +77,12 @@ age21 |>
 
 ------------------------------------------------------------------------
 
-#### **Q2** Which Maryland counties have a median age of at least 50? You can use the dataframe you just made to answer this, but you must write code to display only those counties with a median age of at least 50. **A2 Dorcester, Kent, Worcester, and Talbot** 
+#### **Q2** Which Maryland counties have a median age of at least 50? You can use the dataframe you just made to answer this, but you must write code to display only those counties with a median age of at least 50. **A2 Worcester and Talbot** 
 
 ```{r}
 
   age21 <- get_acs(geography = "county",
-              variables = c(medage = "B01002A_001"),
+              variables = c(medage = "B01002_001"),
               state = "MD",
               year = 2021)
 
@@ -108,13 +108,21 @@ age21 |>
 5.  Join the ACS data to the Montgomery County zip code totals dataframe and rename the estimate column to a meaningful name you've given the ACS variable.
 6.  Add a column to the joined dataframe that calculates a rate of calls per 1,000 population.
 
-Which zip code has the highest rate of calls? Which has the lowest?
+Which zip code has the highest rate of calls? Which has the lowest? 20877 with the highest and 20707 for lowest
 
 ```{r}
-overdose <- read.csv("~/Desktop/FALL 2024/JOUR772_fall2024_Johnson/labs/lab_07/data/montgomery_2022_overdoses.csv") |>
-  clean_names()
+overdose <- read.csv("~/Desktop/FALL 2024/JOUR772_fall2024_Johnson/labs/lab_07/data/montgomery_2022_overdoses.csv") 
 
-numcalls <-
+montotal <- overdose |> 
+  group_by(zip) |>
+  summarize(calls = n()) |>
+  arrange(desc(calls))
+
+montotal_pop <- get_acs(geography = "zcta", variables = "B09021_001", state = "MD", year = 2019)
+
+
+
+  
 
 ```
 
@@ -124,14 +132,15 @@ numcalls <-
 
 #### **Q4** Using [CensusReporter.org](https://censusreporter.org/), examine the zip codes on Q3 with the highest and lowest rates and compare and contrast their demographic profiles. Is there a story here?
 
-**Answer here:**
+**Answer here: I could not for the life of me figure out how to search by zip code on that website. I am so sleep deprived. I'm doing my best.**
 
 ------------------------------------------------------------------------
 
 #### **Q5** Go back to your joined dataframe from Q3 and add two more columns representing the minimum and maximum populations based on the estimate and margin of error, then calculate per capita rates for each. Do you get the same two zip codes for the highest and lowest as you did before? Does that give you more or less confidence in your answers to Q3?
 
 ```{r}
-
+montotal_pop <- montotal_pop |>
+  mutate(population_min - population_max = population_moe)
 ```
 
 **Answer here:**
