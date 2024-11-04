@@ -153,48 +153,116 @@ top_40_with_party |>
 
 -   **Sentence text**: **“More than 63 percent of the \$47 million in the database of nearly 3,000 contributions comes from just 108 donations split among these 40 owners —**
 -   **and 79 percent of that money went to Republican causes.”**
--   **Analysis summary**: [Write up two to three sentences describing the results of your analysis. Were you able to confirm the finding? If not, why not?]
+-   **Analysis summary**: First, we proved the 63 percent by getting the sum of the top 108 donors.
 
 ```{r}
 # Put code to reverse engineer sentence here
-top_40_owners <- sports_political_donations |>
-  group_by(owner) |>
-  summarise(donations = sum(amount)) |>
-  top_n(40)
 
-top_40_owners_list <- top_40_owners |>
-  select(owner)
+top_40_all_donations <- sports_political_donations |>
+  left_join(top_40_owners_list) |>
+  arrange(desc(amount))
 
-all_donors <- sports_political_donations |>
-  group_by(owner, party) |>
-  summarise(party_donations = sum(amount))
+top_donations_from_top_40_owners <- top_40_all_donations |>
+  head(108)
 
-# Display results of code below this codeblock
+sum(top_donations_from_top_40_owners$amount)/sum(sports_political_donations$amount)*100
+
+# result 
+
+# 63.20321
+
+top_donations_from_top_40_owners_by_party <- top_donations_from_top_40_owners |>
+  group_by(party) |>
+  summarise(party_amount=sum(amount)) |>
+  filter(party=="REPUBLICAN")
+
+top_donations_from_top_40_owners_by_party$party_amount/sum(top_donations_from_top_40_owners$amount)*100
+
+# result
+
+# 78.90937
+
 
 ```
 
 ### Sentence 4
 
 -   **Sentence text**: **“Overall, 51.7 percent of all contributions by WNBA owners went to Democrats, with 42.3 percent going to Republicans. And of the \$1.3 million contributed by WNBA owners to Republicans, 65.5 percent comes from Kelly Loeffler, the Republican from Georgia who is co-owner of the Atlanta Dream.”**
--   **Analysis summary**: [Write up two to three sentences describing the results of your analysis. Were you able to confirm the finding? If not, why not?]
+-   **Analysis summary**: We created a new data set with top donations from the top 40 owners with parties included,
 
 ```{r}
 # Put code to reverse engineer sentence here
-sports |>
-  group_by(league, amount)
+# Put code to reverse engineer sentence here
+
+wnba_contributions <- sports_political_donations |>
+  filter(
+    str_detect(league, "WNBA")
+  )
+
+wnba_contributions_by_party <- wnba_contributions |>
+  group_by(party) |>
+  summarise(total_amount=sum(amount)) |>
+  arrange(desc(total_amount)) |>
+  mutate(
+    pct_total = total_amount/sum(total_amount)*100
+  )
+
+wnba_contributions_by_party |>
+  select(party, pct_total) |>
+  head(2)
+
+# results
+
+# 51.7% Democrat
+# 42.3% Republican
+
+wnba_republican_contributions <- wnba_contributions |>
+  filter(party=="REPUBLICAN")
+
+sum(wnba_republican_contributions$amount)
+
+# result
+
+# $1,338,459
+
+wnba_republican_contributions_by_owner <- wnba_republican_contributions |>
+  group_by(owner) |>
+  summarise(total_amount = sum(amount))
+
+wnba_republican_contributions_by_owner |>
+  mutate(
+    pct_total=total_amount/sum(total_amount)*100
+  ) |>
+  filter(owner == "KELLY LOEFFLER") |>
+  select(owner, pct_total)
+
+# result
+
+# 65.5%
+
+  
+  #another data set, grouping by party and the sumarizing by sum of the amount and filter by republican
 # Display results of code below this codeblock
 
 ```
 
 ### Sentence 5
 
--   **Sentence text**: [Paste in sentence to engineer here]
--   **Analysis summary**: [Write up two to three sentences describing the results of your analysis. Were you able to confirm the finding? If not, why not?]
+-   **Sentence text**: **“Giants owner Charles Johnson’s total contributions make up 32.1% of the Republican contributions.”**
+-   **Analysis summary**:
 
 ```{r}
-# Put code to reverse engineer sentence here
+republican_donations <- sports_political_donations |>
+  filter(party=="REPUBLICAN")
 
-# Display results of code below this codeblock
+charles_johnson_donations <- republican_donations |>
+  filter(owner=="CHARLES JOHNSON")
+
+sum(charles_johnson_donations$amount)/sum(republican_donations$amount)*100
+
+# result
+
+# 32.1%
 
 ```
 
