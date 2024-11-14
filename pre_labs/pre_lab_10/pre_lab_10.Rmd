@@ -349,7 +349,7 @@ This map is okay, but the color scale makes it hard to draw fine-grained differe
 
 ### Task: Run code
 
-**Task** Run the following code. Describe the output in the space below. **Answer**
+**Task** Run the following code. Describe the output in the space below. **Answer : Charles County has the highest rate of change, other than that it's fairly equal between the three other rates of change.**
 
 ```{r}
 ggplot() +

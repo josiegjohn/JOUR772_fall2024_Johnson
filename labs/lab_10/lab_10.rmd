@@ -153,5 +153,5 @@ ggplot() +
   theme_minimal() +
   scale_fill_binned()
 
-#figure out how to make geometry the last column
+#figure out how to make geometry the last column.
 ```
