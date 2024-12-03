@@ -25,6 +25,9 @@ You also should update your class reference notebook with code examples and what
 ```{r}
 install.packages('tidyverse')
 library(tidyverse)
+
+install.packages("xml2")
+library(xml2)
 ```
 
 The library function loads an R library such as the tidyverse, providing access to the verbs and functions that library contains. You have to load a library before you can use its functions.
@@ -47,13 +50,1903 @@ The library function loads an R library such as the tidyverse, providing access 
 **Task** Put the following code -- which stores the numeral 2 as a variable called number -- in the console and hit enter.
 
 ```{r}
-number <- 2
+
 ```
 
 Then type this code to multiply the variable called number by itself.
 
 ```{r}
-number * number
+library(xml2)
+
+# Your XML data as a string (for simplicity, this is just a snippet)
+xml_data <- '
+<Incidents>
+<Incident>
+<description>Safety Message Event @ I-70W ROADWORK ASSISTANCE (MM 26.0)</description>
+<source>State Highway Administration</source>
+<type>254</type>
+<closed>false</closed>
+<additionalData/>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1731708040000</startDateTime>
+<direction>West</direction>
+<opCenter>SOC</opCenter>
+<county>Washington</county>
+<lanesStatus/>
+<createTime>1732724390000</createTime>
+<lat>39.612907</lat>
+<lon>-77.78257</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>PAUL NICOL 301-729-8441</other>
+<name>Safety Message Event @ I-70W ROADWORK ASSISTANCE (MM 26.0)</name>
+<id>dfff0787a1c400370067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732724390542</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Incident @ MD 155 NORTH AT OHIO ST</description>
+<source>Other</source>
+<type>2</type>
+<closed>false</closed>
+<additionalData/>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Roadwork</incidentType>
+<startDateTime>1732716659000</startDateTime>
+<direction>North</direction>
+<opCenter>SOC</opCenter>
+<county>Harford</county>
+<lanesStatus>1/2 Northbound-right Traffic Lane, Shoulder closed</lanesStatus>
+<createTime>1732719659000</createTime>
+<lat>39.55782</lat>
+<lon>-76.10202</lon>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>RS</laneDescription>
+<laneDirection>south</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L2</laneDescription>
+<laneDirection>south</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L1</laneDescription>
+<laneDirection>south</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>none</laneTrafficFlowDirection>
+<laneType>Double Yellow Line</laneType>
+<laneDescription>Dbl Ylw</laneDescription>
+<laneDirection>south</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L1</laneDescription>
+<laneDirection>north</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>1732716680000</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L2</laneDescription>
+<laneDirection>north</laneDirection>
+<laneStatus>closed</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>1732716680000</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>RS</laneDescription>
+<laneDirection>north</laneDirection>
+<laneStatus>closed</laneStatus>
+</lanes>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other/>
+<name>Incident @ MD 155 NORTH AT OHIO ST</name>
+<id>5a0193732f2801470067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732719664781</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ MD 193 (UNIVERSITY BLVD) @ ADELPHI RD (NB/L) [Opticom Fire Pre-Emption Signal]</description>
+<source>Citizen</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Signal Timing Off</actionType>
+<actionDescription/>
+</actionTypes>
+<actionTypes>
+<actionType>Other</actionType>
+<actionDescription>DO NOT CLOSE/DO NOT DISPATCH/SEE EVENT HISTORY</actionDescription>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1725136878000</startDateTime>
+<direction>East</direction>
+<participants>SHA Signal Ops Unit - SG80789</participants>
+<participants>SHA Signal Ops Unit - 03709SG no AVL</participants>
+<opCenter>SOC</opCenter>
+<county>Prince Georges</county>
+<lanesStatus/>
+<createTime>1732719648000</createTime>
+<lat>38.98645</lat>
+<lon>-76.95581</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other/>
+<name>Action Event @ MD 193 (UNIVERSITY BLVD) @ ADELPHI RD (NB/L) [Opticom Fire Pre-Emption Signal]</name>
+<id>d90025eebe7f02d30066d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723329256</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Safety Message Event @ I-95 NORTH AT EXIT 54 MD 2 HANOVER ST (NB) (MM 52.9)</description>
+<source>Other</source>
+<type>254</type>
+<closed>false</closed>
+<additionalData/>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1732245856000</startDateTime>
+<direction>North</direction>
+<opCenter>AOC Central</opCenter>
+<county>Baltimore City</county>
+<lanesStatus/>
+<createTime>1732719626000</createTime>
+<lat>39.267162</lat>
+<lon>-76.61846</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other/>
+<name>Safety Message Event @ I-95 NORTH AT EXIT 54 MD 2 HANOVER ST (NB) (MM 52.9)</name>
+<id>6d01f96027f9003f0067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732719635660</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Safety Message Event @ I-695 OUTER LOOP TO FORT ARMISTEAD PARK</description>
+<source>Maryland Transportation Authority</source>
+<type>254</type>
+<closed>false</closed>
+<additionalData/>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1711743905000</startDateTime>
+<direction>Outer Loop</direction>
+<opCenter>AOC Central</opCenter>
+<county>Baltimore City</county>
+<lanesStatus/>
+<createTime>1732719654000</createTime>
+<lat>39.207424</lat>
+<lon>-76.54434</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>COMM</other>
+<name>Safety Message Event @ I-695 OUTER LOOP TO FORT ARMISTEAD PARK</name>
+<id>f8006ca10b2302070066d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732719658848</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Safety Message Event @ US 50 EAST PAST EXIT 32 MD 908 OCEANIC DR (EB) TOYS FOR TOTS (MM 31.0)</description>
+<source>Maryland Transportation Authority</source>
+<type>254</type>
+<closed>false</closed>
+<additionalData/>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1732712105000</startDateTime>
+<direction>East</direction>
+<opCenter>AOC South</opCenter>
+<county>Anne Arundel</county>
+<lanesStatus/>
+<createTime>1732719658000</createTime>
+<lat>39.020046</lat>
+<lon>-76.41523</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>AOC 17</other>
+<name>Safety Message Event @ US 50 EAST PAST EXIT 32 MD 908 OCEANIC DR (EB) TOYS FOR TOTS (MM 31.0)</name>
+<id>eb0003a92c1601470067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732719664781</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ US 1 (BALTIMORE AVE) @ LAKELAND RD [Opticom Fire Pre-Emption Signal]</description>
+<source>Citizen</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Signal On Flash</actionType>
+<actionDescription/>
+</actionTypes>
+<actionTypes>
+<actionType>Other</actionType>
+<actionDescription>DO NOT CLOSE/DO NOT DISPATCH/SEE EVENT HISTORY</actionDescription>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1732304981000</startDateTime>
+<direction>North</direction>
+<participants>SHA Signal Ops Unit - 05786SG</participants>
+<opCenter>SOC</opCenter>
+<county>Prince Georges</county>
+<lanesStatus/>
+<createTime>1732719656000</createTime>
+<lat>38.989883</lat>
+<lon>-76.93435</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other/>
+<name>Action Event @ US 1 (BALTIMORE AVE) @ LAKELAND RD [Opticom Fire Pre-Emption Signal]</name>
+<id>6b01315411e000400067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723329257</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ MD 147 (HARFORD RD) @ JOPPA RD (EB/L) [Traffic Control Signal]</description>
+<source>Local Police</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Other</actionType>
+<actionDescription>PEDESTRIAN CROSSING</actionDescription>
+</actionTypes>
+<actionTypes>
+<actionType>Signal Involved In Crash</actionType>
+<actionDescription/>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1731410015000</startDateTime>
+<direction>North</direction>
+<participants>SHA Signal Ops Unit - SG04823</participants>
+<opCenter>SOC</opCenter>
+<county>Baltimore</county>
+<lanesStatus/>
+<createTime>1732719603000</createTime>
+<lat>39.39473</lat>
+<lon>-76.52339</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>BCoPD</other>
+<name>Action Event @ MD 147 (HARFORD RD) @ JOPPA RD (EB/L) [Traffic Control Signal]</name>
+<id>0a021a5e6c3806330067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723329256</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ MD 4 (PENNSYLVANIA AVE) @ BROOKS DR [Traffic Control Signal]</description>
+<source>Local Police</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Other</actionType>
+<actionDescription>PED CROSS WALK HIT</actionDescription>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1726723583000</startDateTime>
+<direction>North</direction>
+<participants>SHA Signal Ops Unit - SG04823</participants>
+<opCenter>SOC</opCenter>
+<county>Prince Georges</county>
+<lanesStatus/>
+<createTime>1732719626000</createTime>
+<lat>38.860325</lat>
+<lon>-76.91853</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>PG</other>
+<name>Action Event @ MD 4 (PENNSYLVANIA AVE) @ BROOKS DR [Traffic Control Signal]</name>
+<id>6f007ffe97b507eb0066d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723329256</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ MD 2 (SOLOMONS ISLAND RD) @ School Warning Beacon [School Warning Beacon]</description>
+<source>State Highway Administration</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Other</actionType>
+<actionDescription>BAD NEUTRAL/METER ISSUE</actionDescription>
+</actionTypes>
+<actionTypes>
+<actionType>Signal Out Complete</actionType>
+<actionDescription/>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1727969081000</startDateTime>
+<direction>North</direction>
+<participants>SHA Signal Ops Unit - 04452SG</participants>
+<opCenter>SOC</opCenter>
+<county>Anne Arundel</county>
+<lanesStatus/>
+<createTime>1732724498000</createTime>
+<lat>38.82156</lat>
+<lon>-76.60883</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>478</other>
+<name>Action Event @ MD 2 (SOLOMONS ISLAND RD) @ School Warning Beacon [School Warning Beacon]</name>
+<id>fc0019383fb703fe0066d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732724501082</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Incident @ US 40 WEST PRIOR TO MIDDLE RIVER RD</description>
+<source>Other</source>
+<type>2</type>
+<closed>false</closed>
+<additionalData/>
+<trafficAlertTextMsg/>
+<participantOnScene>true</participantOnScene>
+<incidentType>Utility Problem</incidentType>
+<startDateTime>1732712905000</startDateTime>
+<direction>West</direction>
+<opCenter>SOC</opCenter>
+<county>Baltimore</county>
+<lanesStatus>Westbound-right Shoulder closed</lanesStatus>
+<createTime>1732720520000</createTime>
+<lat>39.35311</lat>
+<lon>-76.45417</lon>
+<lanes>
+<laneStatusTimestamp>1732713203000</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>RS</laneDescription>
+<laneDirection>west</laneDirection>
+<laneStatus>closed</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L2</laneDescription>
+<laneDirection>west</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L1</laneDescription>
+<laneDirection>west</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>LS</laneDescription>
+<laneDirection>west</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>none</laneTrafficFlowDirection>
+<laneType>Median</laneType>
+<laneDescription>Median</laneDescription>
+<laneDirection>west</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>LS</laneDescription>
+<laneDirection>east</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L1</laneDescription>
+<laneDirection>east</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L2</laneDescription>
+<laneDirection>east</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>RS</laneDescription>
+<laneDirection>east</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>BALTIMORE CITY DPW</other>
+<name>Incident @ US 40 WEST PRIOR TO MIDDLE RIVER RD</name>
+<id>cf00c4c92c1901470067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732720520422</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ MD 704 (MARTIN LUTHER KING JR HWY) @ ARDWICK ARDMORE RD [Traffic Control Signal]</description>
+<source>Local Police</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Signal Timing Off</actionType>
+<actionDescription/>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1732713588000</startDateTime>
+<direction>East</direction>
+<participants>SHA Signal Ops Unit - SG27158 no AVL</participants>
+<opCenter>SOC</opCenter>
+<county>Prince Georges</county>
+<lanesStatus/>
+<createTime>1732719658000</createTime>
+<lat>38.937416</lat>
+<lon>-76.85907</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>PG COUNTY</other>
+<name>Action Event @ MD 704 (MARTIN LUTHER KING JR HWY) @ ARDWICK ARDMORE RD [Traffic Control Signal]</name>
+<id>de0124742d1c01470067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723329257</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ MD 5 (LEONARDTOWN RD) @ MD 925 (OLD WASHINGTON RD) [Opticom Fire Pre-Emption Signal]</description>
+<source>State Police</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Other</actionType>
+<actionDescription>CROSS WALK SIGNAL KNOCKED DOWN</actionDescription>
+</actionTypes>
+<actionTypes>
+<actionType>Signal Involved In Crash</actionType>
+<actionDescription/>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1732237317000</startDateTime>
+<direction>North</direction>
+<participants>SHA Signal Ops Unit - 05786SG</participants>
+<participants>SHA Signal Ops Unit - 04456SG</participants>
+<opCenter>SOC</opCenter>
+<county>Charles</county>
+<lanesStatus/>
+<createTime>1732719616000</createTime>
+<lat>38.624588</lat>
+<lon>-76.90839</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>LA PLATA</other>
+<name>Action Event @ MD 5 (LEONARDTOWN RD) @ MD 925 (OLD WASHINGTON RD) [Opticom Fire Pre-Emption Signal]</name>
+<id>4701570420d8003f0067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723329256</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ MD 198 (LAUREL FT MEADE RD) @ RED CLAY RD [Traffic Control Signal]</description>
+<source>State Highway Administration</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Other</actionType>
+<actionDescription>stuck on red</actionDescription>
+</actionTypes>
+<actionTypes>
+<actionType>Signal Stuck</actionType>
+<actionDescription/>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1732718565000</startDateTime>
+<direction>East</direction>
+<participants>SHA Signal Ops Unit - 06555SG</participants>
+<opCenter>SOC</opCenter>
+<county>Anne Arundel</county>
+<lanesStatus/>
+<createTime>1732721744000</createTime>
+<lat>39.09881</lat>
+<lon>-76.810555</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>LAUREL SHOP</other>
+<name>Action Event @ MD 198 (LAUREL FT MEADE RD) @ RED CLAY RD [Traffic Control Signal]</name>
+<id>80013ee5312f01470067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723329256</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ US 1 (BLADENSBURG RD) @ MD 208 (38TH AVE) [Traffic Control Signal]</description>
+<source>State Highway Administration</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Signal Involved In Crash</actionType>
+<actionDescription/>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>true</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1730375167000</startDateTime>
+<direction>North</direction>
+<participants>SHA Signal Ops Unit - 04456SG</participants>
+<participants>SHA Signal Ops Unit - 05789SG</participants>
+<opCenter>SOC</opCenter>
+<county>Prince Georges</county>
+<lanesStatus/>
+<createTime>1732719607000</createTime>
+<lat>38.934933</lat>
+<lon>-76.95087</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>486</other>
+<name>Action Event @ US 1 (BLADENSBURG RD) @ MD 208 (38TH AVE) [Traffic Control Signal]</name>
+<id>1c0140fe966d03230067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723329256</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Incident @ US 29 NORTH AT TECH RD</description>
+<source>State Highway Administration</source>
+<type>2</type>
+<closed>false</closed>
+<additionalData/>
+<trafficAlertTextMsg/>
+<participantOnScene>true</participantOnScene>
+<incidentType>Utility Problem</incidentType>
+<startDateTime>1732720770000</startDateTime>
+<direction>North</direction>
+<opCenter>SOC</opCenter>
+<county>Montgomery</county>
+<lanesStatus>Southbound-Left Turn Lane, left Shoulder, Northbound-Left Turn Lane, left Shoulder closed</lanesStatus>
+<createTime>1732721978000</createTime>
+<lat>39.05804</lat>
+<lon>-76.96857</lon>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>RS</laneDescription>
+<laneDirection>south</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L3</laneDescription>
+<laneDirection>south</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L2</laneDescription>
+<laneDirection>south</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L1</laneDescription>
+<laneDirection>south</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>1732720778000</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Left Turn Lane</laneType>
+<laneDescription>Lf Turn</laneDescription>
+<laneDirection>south</laneDirection>
+<laneStatus>closed</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>1732720778000</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>LS</laneDescription>
+<laneDirection>south</laneDirection>
+<laneStatus>closed</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>none</laneTrafficFlowDirection>
+<laneType>Median</laneType>
+<laneDescription>Median</laneDescription>
+<laneDirection>south</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>1732720778000</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>LS</laneDescription>
+<laneDirection>north</laneDirection>
+<laneStatus>closed</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>1732720778000</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Left Turn Lane</laneType>
+<laneDescription>Lf Turn</laneDescription>
+<laneDirection>north</laneDirection>
+<laneStatus>closed</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L1</laneDescription>
+<laneDirection>north</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L2</laneDescription>
+<laneDirection>north</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L3</laneDescription>
+<laneDirection>north</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>RS</laneDescription>
+<laneDirection>north</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>FAIRLAND</other>
+<name>Incident @ US 29 NORTH AT TECH RD</name>
+<id>5c017282333801470067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732721981884</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ I-95 SOUTH AT EXIT 67 MD 43 WHITE MARSH BLVD (SB) (MM 67.3)</description>
+<source>Maryland Transportation Authority</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData/>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1732654992000</startDateTime>
+<direction>South</direction>
+<opCenter>AOC Central</opCenter>
+<county>Baltimore</county>
+<lanesStatus/>
+<createTime>1732723658000</createTime>
+<lat>39.382423</lat>
+<lon>-76.44605</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>AOC</other>
+<name>Action Event @ I-95 SOUTH AT EXIT 67 MD 43 WHITE MARSH BLVD (SB) (MM 67.3)</name>
+<id>f9002a900c3701460067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723661528</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Safety Message Event @ FMT / BHT HARBOR TUNNEL HAZMAT RESTRICTIONS</description>
+<source>State Highway Administration</source>
+<type>254</type>
+<closed>false</closed>
+<additionalData/>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1711887528000</startDateTime>
+<direction>Inner/Outer Loops</direction>
+<opCenter>SOC</opCenter>
+<county>Baltimore City</county>
+<lanesStatus/>
+<createTime>1732719633000</createTime>
+<lat>39.218384</lat>
+<lon>-76.52657</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>FSK COMM</other>
+<name>Safety Message Event @ FMT / BHT HARBOR TUNNEL HAZMAT RESTRICTIONS</name>
+<id>8e0088a74c5402090066d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732719643310</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ MD 202 NORTH AT PINEBROOK RD</description>
+<source>Local Police</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Other</actionType>
+<actionDescription>CROSSWALK POLE KNOCKED DOWN</actionDescription>
+</actionTypes>
+<actionTypes>
+<actionType>Signal Involved In Crash</actionType>
+<actionDescription/>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1728840093000</startDateTime>
+<direction>North</direction>
+<participants>SHA Signal Ops Unit - SG04823</participants>
+<opCenter>SOC</opCenter>
+<county>Prince Georges</county>
+<lanesStatus/>
+<createTime>1732719652000</createTime>
+<lat>38.927223</lat>
+<lon>-76.89005</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>PG COUNTY</other>
+<name>Action Event @ MD 202 NORTH AT PINEBROOK RD</name>
+<id>ec006b9d2101010c0067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723329256</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ MD 414 (ST BARNABAS RD) @ MD 975 (JOHN HANSON LA) [Traffic Control Signal]</description>
+<source>Citizen</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Other</actionType>
+<actionDescription>DO NOT CLOSE/DO NOT DISPATCH/SEE EVENT HISTORY</actionDescription>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1732066231000</startDateTime>
+<direction>East</direction>
+<participants>SHA Signal Ops Unit - 05786SG</participants>
+<opCenter>SOC</opCenter>
+<county>Prince Georges</county>
+<lanesStatus/>
+<createTime>1732719625000</createTime>
+<lat>38.804405</lat>
+<lon>-76.97467</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other/>
+<name>Action Event @ MD 414 (ST BARNABAS RD) @ MD 975 (JOHN HANSON LA) [Traffic Control Signal]</name>
+<id>6b00f1b6963b013d0067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723329256</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ MD 5 (BRANCH AVE) @ MD 637 (NAYLOR RD (WB/L)) [Traffic Control Signal]</description>
+<source>Local Police</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Signal On Flash</actionType>
+<actionDescription/>
+</actionTypes>
+<actionTypes>
+<actionType>Other</actionType>
+<actionDescription>PED SIGNAL KNOCKED DOWN</actionDescription>
+</actionTypes>
+<actionTypes>
+<actionType>Signal Involved In Crash</actionType>
+<actionDescription/>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1719679991000</startDateTime>
+<direction>North</direction>
+<participants>SHA Signal Ops Unit - SG04823</participants>
+<opCenter>SOC</opCenter>
+<county>Prince Georges</county>
+<lanesStatus/>
+<createTime>1732719615000</createTime>
+<lat>38.84823</lat>
+<lon>-76.95306</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other/>
+<name>Action Event @ MD 5 (BRANCH AVE) @ MD 637 (NAYLOR RD (WB/L)) [Traffic Control Signal]</name>
+<id>41001df6bd3b02800066d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723329256</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ MD 3 (ROBERT CRAIN HWY) @ CRAWFORD BLVD (WB/L) [Traffic Control Signal] (MM 4.0)</description>
+<source>Citizen</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Signal Timing Off</actionType>
+<actionDescription/>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1732641134000</startDateTime>
+<direction>North</direction>
+<participants>SHA Signal Ops Unit - 04452SG</participants>
+<opCenter>SOC</opCenter>
+<county>Anne Arundel</county>
+<lanesStatus/>
+<createTime>1732719657000</createTime>
+<lat>39.01001</lat>
+<lon>-76.69791</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other/>
+<name>Action Event @ MD 3 (ROBERT CRAIN HWY) @ CRAWFORD BLVD (WB/L) [Traffic Control Signal] (MM 4.0)</name>
+<id>8201206ef80100460067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723329256</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Safety Message Event @ US 40 EAST/WEST SCALE HOUSE</description>
+<source>Maryland Transportation Authority</source>
+<type>254</type>
+<closed>false</closed>
+<additionalData/>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1732545684000</startDateTime>
+<direction>East/West</direction>
+<opCenter>AOC Central</opCenter>
+<county>Cecil</county>
+<lanesStatus/>
+<createTime>1732719657000</createTime>
+<lat>39.56659</lat>
+<lon>-76.078255</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>JAKE JFK MAINT 2 443-807-9949</other>
+<name>Safety Message Event @ US 40 EAST/WEST SCALE HOUSE</name>
+<id>bbff04949e8c00440067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732719664780</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ MD 5 (BRANCH AVE) @ MD 5 (COVENTRY WAY) [Traffic Control Signal]</description>
+<source>State Highway Administration</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Other</actionType>
+<actionDescription>PED SIGNAL STRUCK</actionDescription>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1720136653000</startDateTime>
+<direction>North</direction>
+<participants>SHA Signal Ops Unit - 06555SG</participants>
+<opCenter>SOC</opCenter>
+<county>Prince Georges</county>
+<lanesStatus/>
+<createTime>1732719638000</createTime>
+<lat>38.78304</lat>
+<lon>-76.89444</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>474</other>
+<name>Action Event @ MD 5 (BRANCH AVE) @ MD 5 (COVENTRY WAY) [Traffic Control Signal]</name>
+<id>aaff93ccdd3300870066d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723329256</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ OCEANIC DR EAST AT EAST COLLEGE PKWY</description>
+<source>Maryland Transportation Authority</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData/>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1723228340000</startDateTime>
+<direction>East</direction>
+<opCenter>AOC South</opCenter>
+<county>Anne Arundel</county>
+<lanesStatus/>
+<createTime>1732719632000</createTime>
+<lat>39.020046</lat>
+<lon>-76.40763</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>CHRIS CRISCOLE</other>
+<name>Action Event @ OCEANIC DR EAST AT EAST COLLEGE PKWY</name>
+<id>8700c8b33c6006b60066d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723329257</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Incident @ US 40 WEST BETWEEN EDGEWOOD RD AND ABINGDON RD</description>
+<source>Other</source>
+<type>2</type>
+<closed>false</closed>
+<additionalData/>
+<trafficAlertTextMsg/>
+<participantOnScene>true</participantOnScene>
+<incidentType>Roadwork</incidentType>
+<startDateTime>1732717997000</startDateTime>
+<direction>West</direction>
+<opCenter>SOC</opCenter>
+<county>Harford</county>
+<lanesStatus>Westbound-right Shoulder closed</lanesStatus>
+<createTime>1732721738000</createTime>
+<lat>39.436535</lat>
+<lon>-76.307076</lon>
+<lanes>
+<laneStatusTimestamp>1732718287000</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>RS</laneDescription>
+<laneDirection>west</laneDirection>
+<laneStatus>closed</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>1732718284000</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L2</laneDescription>
+<laneDirection>west</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>1732718284000</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L1</laneDescription>
+<laneDirection>west</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>1732718284000</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>LS</laneDescription>
+<laneDirection>west</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>none</laneTrafficFlowDirection>
+<laneType>Median</laneType>
+<laneDescription>Median</laneDescription>
+<laneDirection>west</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>LS</laneDescription>
+<laneDirection>east</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L1</laneDescription>
+<laneDirection>east</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L2</laneDescription>
+<laneDirection>east</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>RS</laneDescription>
+<laneDirection>east</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>VERIZON</other>
+<name>Incident @ US 40 WEST BETWEEN EDGEWOOD RD AND ABINGDON RD</name>
+<id>84017dad302d01470067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732721740495</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Incident @ US 15 SOUTH PAST W 7TH ST (MM 14.0)</description>
+<source>CHART Unit</source>
+<type>2</type>
+<closed>false</closed>
+<additionalData/>
+<trafficAlertTextMsg/>
+<participantOnScene>true</participantOnScene>
+<incidentType>Property Damage</incidentType>
+<startDateTime>1732723967000</startDateTime>
+<direction>South</direction>
+<participants>CHART Unit - 09277SG</participants>
+<opCenter>TOC7</opCenter>
+<county>Frederick</county>
+<lanesStatus>Southbound-right Shoulder closed</lanesStatus>
+<createTime>1732724814000</createTime>
+<lat>39.42877</lat>
+<lon>-77.41966</lon>
+<lanes>
+<laneStatusTimestamp>1732724815000</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>RS</laneDescription>
+<laneDirection>south</laneDirection>
+<laneStatus>closed</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L2</laneDescription>
+<laneDirection>south</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L1</laneDescription>
+<laneDirection>south</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>LS</laneDescription>
+<laneDirection>south</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>none</laneTrafficFlowDirection>
+<laneType>Median</laneType>
+<laneDescription>Median</laneDescription>
+<laneDirection>south</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>LS</laneDescription>
+<laneDirection>north</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L1</laneDescription>
+<laneDirection>north</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L2</laneDescription>
+<laneDirection>north</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Right Acceleration Lane</laneType>
+<laneDescription>Rt Accel</laneDescription>
+<laneDirection>north</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>RS</laneDescription>
+<laneDirection>north</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>(9706) Johnson, Rodney</other>
+<name>Incident @ US 15 SOUTH PAST W 7TH ST (MM 14.0)</name>
+<id>5801e3ff354401470067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732724817746</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ MD 404 (QUEEN ANNES HWY) @ PARTNERSHIP FARM LA (MB) [Warning Beacon] (MM 6.5)</description>
+<source>Other</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Signal Green Bulb Out</actionType>
+<actionDescription/>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1730454878000</startDateTime>
+<direction>East</direction>
+<opCenter>SOC</opCenter>
+<county>Queen Annes</county>
+<lanesStatus/>
+<createTime>1732723670000</createTime>
+<lat>38.92352</lat>
+<lon>-75.96751</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other/>
+<name>Action Event @ MD 404 (QUEEN ANNES HWY) @ PARTNERSHIP FARM LA (MB) [Warning Beacon] (MM 6.5)</name>
+<id>32017b5ed8a503240067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723671648</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Safety Message Event @ I-68 Truck Speeds</description>
+<source>Other</source>
+<type>254</type>
+<closed>false</closed>
+<additionalData/>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1662651029000</startDateTime>
+<direction>None</direction>
+<opCenter>SOC</opCenter>
+<county>Allegany</county>
+<lanesStatus/>
+<createTime>1732719652000</createTime>
+<lat>39.63527</lat>
+<lon>-78.83035</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other/>
+<name>Safety Message Event @ I-68 Truck Speeds</name>
+<id>eb0001957b0a051a0063d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732719658848</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ MD 26 (LIBERTY RD) @ MONROE AVE [Traffic Control Signal]</description>
+<source>State Police</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Signal Out Complete</actionType>
+<actionDescription/>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1732720363000</startDateTime>
+<direction>East</direction>
+<participants>SHA Signal Ops Unit - SG27157 no AVL</participants>
+<opCenter>SOC</opCenter>
+<county>Carroll</county>
+<lanesStatus/>
+<createTime>1732723324000</createTime>
+<lat>39.39719</lat>
+<lon>-76.925354</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other/>
+<name>Action Event @ MD 26 (LIBERTY RD) @ MONROE AVE [Traffic Control Signal]</name>
+<id>1b01cbeb323601470067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723329256</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Safety Message Event @ SLOWER TRAFFIC KEEP RIGHT (HB 222)</description>
+<source>State Highway Administration</source>
+<type>254</type>
+<closed>false</closed>
+<additionalData/>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1700513373000</startDateTime>
+<direction>West</direction>
+<opCenter>SOC</opCenter>
+<county>Washington</county>
+<lanesStatus/>
+<createTime>1732719624000</createTime>
+<lat>39.69961</lat>
+<lon>-78.24134</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other/>
+<name>Safety Message Event @ SLOWER TRAFFIC KEEP RIGHT (HB 222)</name>
+<id>6701225d0dc6075b0065d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732719628119</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ MD 222 TRUCK RESTRICTIONS</description>
+<source>State Highway Administration</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData/>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1662650026000</startDateTime>
+<direction>N/A</direction>
+<opCenter>SOC</opCenter>
+<county>Cecil</county>
+<lanesStatus/>
+<createTime>1732719624000</createTime>
+<lat>39.69006</lat>
+<lon>-76.13271</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>D2 DE</other>
+<name>Action Event @ MD 222 TRUCK RESTRICTIONS</name>
+<id>670171a97706051a0063d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723329257</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ US 1 (BALTIMORE AVE) @ MELBOURNE PL [Opticom Fire Pre-Emption Signal]</description>
+<source>Local Police</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Signal On Flash</actionType>
+<actionDescription/>
+</actionTypes>
+<actionTypes>
+<actionType>Other</actionType>
+<actionDescription>DO NOT CLOSE/DO NOT DISPATCH/SEE EVENT HISTORY</actionDescription>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1732309902000</startDateTime>
+<direction>North</direction>
+<participants>SHA Signal Ops Unit - 03709SG no AVL</participants>
+<opCenter>SOC</opCenter>
+<county>Prince Georges</county>
+<lanesStatus/>
+<createTime>1732719656000</createTime>
+<lat>38.990856</lat>
+<lon>-76.93393</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>UMCP CAMPUS POLICE</other>
+<name>Action Event @ US 1 (BALTIMORE AVE) @ MELBOURNE PL [Opticom Fire Pre-Emption Signal]</name>
+<id>fe00728e16f300400067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723329256</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ MD 176 (DORSEY RD) @ CENTRAL AVE [School Warning Beacon]</description>
+<source>Other</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Other</actionType>
+<actionDescription>DO NOT CLOSE/DO NOT DISPATCH/SEE EVENT HISTORY</actionDescription>
+</actionTypes>
+<actionTypes>
+<actionType>Signal Involved In Crash</actionType>
+<actionDescription/>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1716435212000</startDateTime>
+<direction>East</direction>
+<participants>SHA Signal Ops Unit - 05786SG</participants>
+<participants>SHA Signal Ops Unit - SG80103</participants>
+<opCenter>SOC</opCenter>
+<county>Anne Arundel</county>
+<lanesStatus/>
+<createTime>1732719617000</createTime>
+<lat>39.16956</lat>
+<lon>-76.63277</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>AA CO FD</other>
+<name>Action Event @ MD 176 (DORSEY RD) @ CENTRAL AVE [School Warning Beacon]</name>
+<id>4a00850cf5b9094e0066d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723329256</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ I-195 EAST/WEST PAST MD 170 (BALTIMORE WASHINGTON INTL AIRPORT)</description>
+<source>Other</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Parking Info</actionType>
+<actionDescription/>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1720536223000</startDateTime>
+<direction>East/West</direction>
+<opCenter>SOC</opCenter>
+<county>Anne Arundel</county>
+<lanesStatus/>
+<createTime>1732719610000</createTime>
+<lat>39.184433</lat>
+<lon>-76.67453</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other/>
+<name>Action Event @ I-195 EAST/WEST PAST MD 170 (BALTIMORE WASHINGTON INTL AIRPORT)</name>
+<id>2b00309ecf4c018d0066d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723329256</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Disabled Vehicle Event @ MD 200 EAST PAST EXIT 16A US 29 COLUMBIA PIKE (EB) (MM 16.5)</description>
+<source>Maryland Transportation Authority</source>
+<type>255</type>
+<closed>false</closed>
+<additionalData/>
+<trafficAlertTextMsg/>
+<participantOnScene>true</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1732723333000</startDateTime>
+<direction>East</direction>
+<participants>MDTA ICC CP - 1</participants>
+<opCenter>AOC South</opCenter>
+<county>Montgomery</county>
+<lanesStatus/>
+<createTime>1732724558000</createTime>
+<lat>39.07432</lat>
+<lon>-76.94384</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>MAINT 833</other>
+<name>Disabled Vehicle Event @ MD 200 EAST PAST EXIT 16A US 29 COLUMBIA PIKE (EB) (MM 16.5)</name>
+<id>8e009585354201470067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732724561380</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ MD 194 (WOODSBORO PIKE) @ COPPERMINE RD [Opticom Fire Pre-Emption Signal]</description>
+<source>Local Police</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Signal Red Bulb Out</actionType>
+<actionDescription/>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1732573983000</startDateTime>
+<direction>North</direction>
+<participants>SHA Signal Ops Unit - SG80789</participants>
+<opCenter>SOC</opCenter>
+<county>Frederick</county>
+<lanesStatus/>
+<createTime>1732719657000</createTime>
+<lat>39.537857</lat>
+<lon>-77.312546</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>FCSO</other>
+<name>Action Event @ MD 194 (WOODSBORO PIKE) @ COPPERMINE RD [Opticom Fire Pre-Emption Signal]</name>
+<id>7e00aa1fc1fb00440067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723329256</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ MD 223 (PISCATAWAY RD) @ GARDEN DR [Traffic Control Signal]</description>
+<source>Local Police</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Signal On Flash</actionType>
+<actionDescription/>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1732376020000</startDateTime>
+<direction>North</direction>
+<participants>SHA Signal Ops Unit - 03709SG no AVL</participants>
+<opCenter>SOC</opCenter>
+<county>Prince Georges</county>
+<lanesStatus/>
+<createTime>1732719656000</createTime>
+<lat>38.764362</lat>
+<lon>-76.903595</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>PG</other>
+<name>Action Event @ MD 223 (PISCATAWAY RD) @ GARDEN DR [Traffic Control Signal]</name>
+<id>f500fad43cf500410067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723329256</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Incident @ MD 200 WEST PAST EXIT 8A MD 97 GEORGIA AVE (WB) (MM 4.1)</description>
+<source>Maryland Transportation Authority</source>
+<type>2</type>
+<closed>false</closed>
+<additionalData/>
+<trafficAlertTextMsg/>
+<participantOnScene>true</participantOnScene>
+<incidentType>Roadwork</incidentType>
+<startDateTime>1732712179000</startDateTime>
+<direction>West</direction>
+<opCenter>AOC South</opCenter>
+<county>Montgomery</county>
+<lanesStatus>1/3 Westbound-left Traffic Lane, left Shoulder closed</lanesStatus>
+<createTime>1732719658000</createTime>
+<lat>39.1376</lat>
+<lon>-77.14249</lon>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>RS</laneDescription>
+<laneDirection>west</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L3</laneDescription>
+<laneDirection>west</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L2</laneDescription>
+<laneDirection>west</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>1732712195000</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L1</laneDescription>
+<laneDirection>west</laneDirection>
+<laneStatus>closed</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>1732712195000</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>LS</laneDescription>
+<laneDirection>west</laneDirection>
+<laneStatus>closed</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>none</laneTrafficFlowDirection>
+<laneType>Median</laneType>
+<laneDescription>Median</laneDescription>
+<laneDirection>west</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>LS</laneDescription>
+<laneDirection>east</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L1</laneDescription>
+<laneDirection>east</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L2</laneDescription>
+<laneDirection>east</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L3</laneDescription>
+<laneDirection>east</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>RS</laneDescription>
+<laneDirection>east</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>903</other>
+<name>Incident @ MD 200 WEST PAST EXIT 8A MD 97 GEORGIA AVE (WB) (MM 4.1)</name>
+<id>4c011af32c1601470067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732719664780</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Safety Message Event @ I-95 NORTH PAST EXIT 50A-B US 1 CATON AVE (NB) MM 52.6</description>
+<source>Lane Closure Permits</source>
+<type>254</type>
+<closed>false</closed>
+<additionalData/>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1711042976000</startDateTime>
+<direction>North</direction>
+<opCenter>AOC Central</opCenter>
+<county>Baltimore City</county>
+<lanesStatus/>
+<createTime>1732719602000</createTime>
+<lat>39.26747</lat>
+<lon>-76.625015</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other/>
+<name>Safety Message Event @ I-95 NORTH PAST EXIT 50A-B US 1 CATON AVE (NB) MM 52.6</name>
+<id>08013d9f0c7100fc0065d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732719605796</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ MD 228 (BERRY RD) @ STREAMVIEW DR [Traffic Control Signal]</description>
+<source>State Highway Administration</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Other</actionType>
+<actionDescription>SEE EVENT HISTORY</actionDescription>
+</actionTypes>
+<actionTypes>
+<actionType>Signal Out Complete</actionType>
+<actionDescription/>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1729621075000</startDateTime>
+<direction>East</direction>
+<participants>SHA Signal Ops Unit - 04456SG</participants>
+<opCenter>SOC</opCenter>
+<county>Charles</county>
+<lanesStatus/>
+<createTime>1732723069000</createTime>
+<lat>38.6473</lat>
+<lon>-76.93818</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>CHA CO</other>
+<name>Action Event @ MD 228 (BERRY RD) @ STREAMVIEW DR [Traffic Control Signal]</name>
+<id>5801f75256ec01170067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723329256</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ I-95 NORTH/SOUTH AT MP 54.8 (FORT MCHENRY TUNNEL)</description>
+<source>Maryland Transportation Authority</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Other</actionType>
+<actionDescription>SBR1 E21. SBR2 E21, NBR3 E21, NB</actionDescription>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1732536837000</startDateTime>
+<direction>North/South</direction>
+<opCenter>AOC Central</opCenter>
+<county>Baltimore City</county>
+<lanesStatus/>
+<createTime>1732719656000</createTime>
+<lat>39.261272</lat>
+<lon>-76.575554</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other>ARK</other>
+<name>Action Event @ I-95 NORTH/SOUTH AT MP 54.8 (FORT MCHENRY TUNNEL)</name>
+<id>270135058a6a00440067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723329256</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Safety Message Event @ BROENING HW EAST/WEST AT NORTH SERVICE RD (PORT OF BALTIMORE - MARYLAND PORT ADMINISTRATION)</description>
+<source>Other</source>
+<type>254</type>
+<closed>false</closed>
+<additionalData/>
+<trafficAlertTextMsg>SAFETY MESSAGE:BROENING HW EAST/WEST AT NORTH SERVICE RD (PORT OF BALTIMORE - MARYLAND PORT ADMINISTRATION)</trafficAlertTextMsg>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1732708846000</startDateTime>
+<direction>East/West</direction>
+<opCenter>SOC</opCenter>
+<county>Baltimore City</county>
+<lanesStatus/>
+<createTime>1732719658000</createTime>
+<lat>39.256924</lat>
+<lon>-76.53259</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other/>
+<name>Safety Message Event @ BROENING HW EAST/WEST AT NORTH SERVICE RD (PORT OF BALTIMORE - MARYLAND PORT ADMINISTRATION)</name>
+<id>1701faee290901470067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732719664780</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Incident @ I-95 SOUTH PRIOR TO EXIT 67 MD 43 WHITE MARSH BLVD (SB) (MM 71.1)</description>
+<source>Maryland Transportation Authority</source>
+<type>2</type>
+<closed>false</closed>
+<additionalData/>
+<trafficAlertTextMsg/>
+<participantOnScene>true</participantOnScene>
+<incidentType>Personal Injury</incidentType>
+<startDateTime>1732718983000</startDateTime>
+<direction>South</direction>
+<participants>Priv. Tow Light Duty</participants>
+<participants>MDTA JFK CP - 2</participants>
+<participants>Fireboard</participants>
+<opCenter>AOC Central</opCenter>
+<county>Baltimore</county>
+<lanesStatus>Southbound-left Shoulder closed</lanesStatus>
+<createTime>1732723658000</createTime>
+<lat>39.423157</lat>
+<lon>-76.397545</lon>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>RS</laneDescription>
+<laneDirection>south</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L4</laneDescription>
+<laneDirection>south</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L3</laneDescription>
+<laneDirection>south</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>1732720819000</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L2</laneDescription>
+<laneDirection>south</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>1732722380000</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L1</laneDescription>
+<laneDirection>south</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>1732719074000</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>LS</laneDescription>
+<laneDirection>south</laneDirection>
+<laneStatus>closed</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>none</laneTrafficFlowDirection>
+<laneType>Median</laneType>
+<laneDescription>Median</laneDescription>
+<laneDirection>south</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>LS</laneDescription>
+<laneDirection>north</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L1</laneDescription>
+<laneDirection>north</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L2</laneDescription>
+<laneDirection>north</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L3</laneDescription>
+<laneDirection>north</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Traffic Lane</laneType>
+<laneDescription>L4</laneDescription>
+<laneDirection>north</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<lanes>
+<laneStatusTimestamp>0</laneStatusTimestamp>
+<laneTrafficFlowDirection>primary</laneTrafficFlowDirection>
+<laneType>Shoulder</laneType>
+<laneDescription>RS</laneDescription>
+<laneDirection>north</laneDirection>
+<laneStatus>open</laneStatus>
+</lanes>
+<vehicles>2 vehicles involved.</vehicles>
+<trafficAlert>true</trafficAlert>
+<other>CP 1</other>
+<name>Incident @ I-95 SOUTH PRIOR TO EXIT 67 MD 43 WHITE MARSH BLVD (SB) (MM 71.1)</name>
+<id>8800a287313101470067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732723661527</lastCachedDataUpdateTime>
+</Incident>
+<Incident>
+<description>Action Event @ MD 5 (BRANCH AVE) @ EARNSHAW DR [Traffic Control Signal]</description>
+<source>Citizen</source>
+<type>249</type>
+<closed>false</closed>
+<additionalData>
+<actionTypes>
+<actionType>Other</actionType>
+<actionDescription>DO NOT CLOSE/DO NOT DISPATCH/SEE EVENT HISTORY</actionDescription>
+</actionTypes>
+</additionalData>
+<trafficAlertTextMsg/>
+<participantOnScene>false</participantOnScene>
+<incidentType>Other</incidentType>
+<startDateTime>1729529474000</startDateTime>
+<direction>North</direction>
+<participants>SHA Signal Ops Unit - SG27158 no AVL</participants>
+<opCenter>SOC</opCenter>
+<county>Prince Georges</county>
+<lanesStatus/>
+<createTime>1732724389000</createTime>
+<lat>38.727978</lat>
+<lon>-76.88124</lon>
+<vehicles>0 vehicles involved.</vehicles>
+<trafficAlert>false</trafficAlert>
+<other/>
+<name>Action Event @ MD 5 (BRANCH AVE) @ EARNSHAW DR [Traffic Control Signal]</name>
+<id>c9ffef81078601160067d32ec4235c0a</id>
+<lastCachedDataUpdateTime>1732724390542</lastCachedDataUpdateTime>
+</Incident>
+</Incidents>'
+# Parse the XML string
+xml_parsed <- read_xml(xml_data)
+
+# Extract all descriptions of the incidents
+descriptions <- xml_find_all(xml_parsed, "//description") %>% xml_text()
+
+# Extract latitudes and longitudes of the incidents
+latitudes <- xml_find_all(xml_parsed, "//lat") %>% xml_text()
+longitudes <- xml_find_all(xml_parsed, "//lon") %>% xml_text()
+
+# Extract start date/time (note: these are timestamps, so you may want to convert them)
+start_dates <- xml_find_all(xml_parsed, "//startDateTime") %>% xml_text()
+
+# Convert start date/time from Unix timestamp to human-readable format
+start_dates <- as.POSIXct(as.numeric(start_dates) / 1000, origin = "1970-01-01", tz = "UTC")
+
+# Extract incident types
+incident_types <- xml_find_all(xml_parsed, "//incidentType") %>% xml_text()
+
+# Extract counties
+counties <- xml_find_all(xml_parsed, "//county") %>% xml_text()
+
+# Display extracted data
+data.frame(
+  Description = descriptions,
+  Latitude = latitudes,
+  Longitude = longitudes,
+  StartDateTime = start_dates,
+  IncidentType = incident_types,
+  County = counties
+)
 ```
 
 What does it return? Type your answer below:
@@ -91,7 +1984,7 @@ library(tidyverse)
 **Task** Load the UMD courses data by running the following codeblock. The data is contained in an .rds file, which is a binary format for R data.
 
 ```{r}
-umd_courses <- read_rds("umd_courses.rds")
+
 ```
 
 Once it loads, look at the environment window at right in RStudio for umd_courses It's next to a small blue circle with a white arrow in it. To the right of that, look at how many "obs" the dataset has ("obs" is short for observation, which is another way of saying rows or records). Look at how many variables it has (another way of saying columns or fields). Write the number of observations and variables below.
@@ -103,7 +1996,7 @@ Once it loads, look at the environment window at right in RStudio for umd_course
 **Task** Run the following codeblock to use glimpse() to get a sense of the data, some of the values in each field/variable/column, and the data types of each field/variable/column.
 
 ```{r}
-glimpse(umd_courses)
+
 ```
 
 In the space below, write the data type for the "id" column and the "seats" column (it's in light gray, offset by \< \>). **Answer**
@@ -113,7 +2006,7 @@ In the space below, write the data type for the "id" column and the "seats" colu
 **Task** Run the following codeblock to use head() to examine the first six rows of data. Explore the data by clicking the black arrow on the right side of the output table, allowing you to examine additional columns.
 
 ```{r}
-head(umd_courses)
+
 ```
 
 In the space below, write the name of the business from the first row of the "name" column. **Answer**
@@ -131,11 +2024,7 @@ To do that by hand, we'd have to take each of the 60,672 individual rows (or obs
 **Task** Run the following codeblock:
 
 ```{r}
-umd_courses |>
-  group_by(term) |>
-  summarise(
-    count_classes = n()
-  )
+
 ```
 
 Describe what you think each line of this code is doing below, based on the result:
@@ -147,12 +2036,7 @@ Describe what you think each line of this code is doing below, based on the resu
 **Task** Run the following codeblock:
 
 ```{r}
-umd_courses |>
-  group_by(term) |>
-  summarise(
-    count_classes = n()
-  ) |>
-  arrange(desc(count_classes))
+
 ```
 
 Compared to the previous codeblock, what has changed and how did that affect the result? **Answer**
@@ -162,12 +2046,7 @@ Compared to the previous codeblock, what has changed and how did that affect the
 **Task** Run the following codeblock.
 
 ```{r}
-umd_courses |>
-  group_by(term, department) |>
-  summarise(
-    count_classes = n()
-  ) |>
-  arrange(term, department)
+
 ```
 
 Compared to the previous codeblock, how did the output change and what in the code changed it?
@@ -179,13 +2058,7 @@ Compared to the previous codeblock, how did the output change and what in the co
 **Task** Run the following codeblock:
 
 ```{r}
-umd_courses |>
-  group_by(term) |>
-  summarise(
-    count_classes = n(),
-    total_seats = sum(seats)
-  ) |>
-  arrange(desc(total_seats))
+
 ```
 
 Compared to the previous codeblock, what has changed and how did that affect the result? **Answer it's now adding up all of the seats per term**
@@ -195,15 +2068,7 @@ Compared to the previous codeblock, what has changed and how did that affect the
 **Task** Run the following codeblock to group the umd_courses dataframe by term. Then do the following summarizations for each term: count the number of courses, add up the total of all seats, and calculate the mean and median contribution number of seats. Then sort so the term with the most total seats is listed first.
 
 ```{r}
-umd_courses |>
-  group_by(term) |>
-  summarise(
-    count_classes = n(),
-    total_seats = sum(seats),
-    mean_seats = mean(seats),
-    median_seats = median(seats)
-  ) |>
-  arrange(desc(total_seats))
+
 ```
 
 Compared to the previous codeblock, what has changed and how did that affect the result? What do the top terms have in common? **Answer there are even more columns, introducing mean and median seat numbers**
@@ -213,17 +2078,7 @@ Compared to the previous codeblock, what has changed and how did that affect the
 **Task** Run the following codeblock to group the umd_courses dataframe by the department. Then do the following summarizations for each group: count the number of courses, add up the total of all seats, calculate the mean and median number of seats and then add lines to calculate the smallest and largest seat numbers using the `min()` and `max()` functions. Then sort so the department with the largest total number of seats is listed first.
 
 ```{r}
-umd_courses |>
-  group_by(department) |>
-  summarise(
-    count_classes = n(),
-    total_seats = sum(seats),
-    mean_seats = mean(seats),
-    median_seats = median(seats),
-    minimum_seats = min(seats),
-    maximum_seats = max(seats)
-  ) |>
-  arrange(desc(total_seats))
+
 ```
 
 Compared to the previous codeblock, what has changed and how did that affect the result? How is the data sorted?

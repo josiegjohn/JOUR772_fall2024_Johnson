@@ -35,7 +35,7 @@ We're going to load the UMD courses data.
 **Task** Run the codeblock below to load the data, which is contained in an RDS file.
 
 ```{r}
-umd_courses <- read_rds("lab_01.rds")
+crime_data <- read_csv("~/Desktop/Crime_Incidents_July_2023_to_Present_20241127.csv")
 ```
 
 ## Answer questions
@@ -43,12 +43,8 @@ umd_courses <- read_rds("lab_01.rds")
 ### **Q1** Which department has the highest mean (average) number of seats for its classes? You need to show the department with the highest average first. Which one is the most surprising/interesting to you?
 
 ```{r}
-umd_courses |>
-  group_by(department) |>
-  summarise(
-    mean_seats = mean(seats)
-  ) |>
-  arrange(desc(mean_seats))
+crime_data |>
+  filter(str_detect(clearance_code_inc_type, "ACCIDENT"))
 ```
 
 **A1: Engineering, Cooperative Education has the highest mean with over 300 seats on average per class. What is University Courses? Why are so many people taking Air Science?? I'm intrigued by Behavior, Ecology, Evolution and Systematics having a mean seats of 2.5. What?**
